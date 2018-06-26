@@ -1,0 +1,40 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="plugins/jQuery/jquery-2.2.3.min.js"></script>
+    <script type="text/javascript">
+        var poi=new Array();
+        $(document).ready(function(){
+            $("button").click(function(){
+                var a=$.getJSON("./json/sh.json",function(result){
+                    $.each(result, function(){});
+                    var jsont=a.responseText;
+                    var json=JSON.parse(jsont);
+                    for (var key in json) {
+                        if(key==33){
+                            var jso=json[key].children;
+                            for(var ke in jso){
+                                var po={"ln":null,"la":null,"we":null};
+                                po.ln=jso[ke].jd;
+                                po.la=jso[ke].wd;
+                                po.we=Math.floor(Math.random()*100);
+                                poi.push(po);
+//                                document.write(ke+":"+JSON.stringify(jso[ke].jd)+","+JSON.stringify(jso[ke].wd)+"</br>");
+//                                document.write(JSON.stringify(po)+"</br>");
+
+                            }
+                            document.write(JSON.stringify(poi));
+
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+
+</head>
+
+<body>
+<button>获取JSON</button>
+</body>
+</html>

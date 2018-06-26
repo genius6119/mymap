@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+  <title>我自己的百度地图</title>
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+  <link rel="stylesheet" href="plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+  <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
+  <link rel="stylesheet" href="http://api.map.baidu.com/library/SearchInfoWindow/1.4/src/SearchInfoWindow_min.css" />
+  <style type="text/css">
+    html,body{margin:0;padding:0;}
+    .iw_poi_title {color:#CC5522;font-size:14px;font-weight:bold;overflow:hidden;padding-right:13px;white-space:nowrap}
+    .iw_poi_content {font:12px arial,sans-serif;overflow:visible;padding-top:4px;white-space:-moz-pre-wrap;word-wrap:break-word}
+  </style>
+  <style type="text/css"> input.pointInput2{  position: absolute;  left: 1470px;  top: 100px;  }</style>
+  <style type="text/css"> h4.dd{  position: absolute;  left: 1470px;  top: 60px;  }</style>
+  <style type="text/css"> input.pointInput{  position: absolute;  left: 1470px;  top: 175px;  }</style>
+  <style type="text/css"> h4.zb{  position: absolute;  left: 1470px;  top: 135px  }</style>
+  <style type="text/css"> input.pointInput3{  position: absolute;  left: 1470px;  top: 250px;  }</style>
+  <style type="text/css"> h4.sd{  position: absolute;  left: 1470px;  top: 210px }</style>
+  <style type="text/css">div.sb{  position: absolute;  left: 1675px;  top: 248px;  }</style>
+  <style type="text/css">div.r-result{  position: absolute;  left: 1470px;  top: 295px;  }</style>
+  <script type="text/javascript" src="http://api.map.baidu.com/api?key=&v=1.1&services=true"></script>
+  <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.2"></script>
+  <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=6mkjChy6GDiOv1xhzmjEK1qx4wLuDTN8"></script>
+  <script type="text/javascript" src="http://api.map.baidu.com/api?v=3.0&ak=6mkjChy6GDiOv1xhzmjEK1qx4wLuDTN8"></script>
+  <script type="text/javascript" src="http://api.map.baidu.com/library/DistanceTool/1.2/src/DistanceTool_min.js"></script>
+  <script type="text/javascript" src="http://api.map.baidu.com/library/DrawingManager/1.4/src/DrawingManager_min.js"></script>
+  <script type="text/javascript" src="http://api.map.baidu.com/library/Heatmap/2.0/src/Heatmap_min.js"></script>
+  <link rel="stylesheet" href="http://api.map.baidu.com/library/DrawingManager/1.4/src/DrawingManager_min.css" />
+  <script type="text/javascript" src="http://api.map.baidu.com/library/SearchInfoWindow/1.4/src/SearchInfoWindow_min.js"></script>
+</head>
+
+<body class="hold-transition skin-black sidebar-mini" >
+<div class="wrapper" >
+  <header class="main-header" >
+    <!-- Logo -->
+    <a class="logo" style="background-color: #4b646f;border-color: #4b646f;color: #d9edf7">
+      <!-- mini logo for sidebar mini 50x50 pixels -->
+      <span class="logo-mini"><b>Z</b>WX</span>
+      <!-- logo for regular state and mobile devices -->
+      <span class="logo-lg"><b>Z</b>WX的地图</span>
+    </a>
+    <!-- Header Navbar: style can be found in header.less -->
+    <nav class="navbar navbar-static-top" style="background-color: #4b646f;color: #d9edf7" >
+      <!-- Sidebar toggle button-->
+      <a href="#" class="sidebar-toggle" data-toggle="offcanvas"  style="border-color: #4b646f;color: #d9edf7">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a>
+      <a href="http://1.beautifulmap.applinzi.com/index.html" style="background-color: #d9edf7;color: #d9edf7";>
+        <span class="logo-mini"><h4></h4></span>
+      </a>
+
+
+    </nav>
+  </header>
+  <!-- Left side column. contains the logo and sidebar -->
+  <aside class="main-sidebar" >
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+      <!-- Sidebar user panel -->
+      <div class="user-panel">
+        <div class="pull-left image">
+          <img src="touxiang3.jpg" class="img-circle" alt="User Image">
+        </div>
+        <div class="pull-left info">
+          <p>张文轩</p>
+          <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+        </div>
+      </div>
+      <!-- search form -->
+      <ul class="sidebar-menu">
+      <li class="header" style="font-size: 15px;font-weight: 600;color: #d9edf7 ">菜单</li>
+        <!-- Optionally, you can add icons to the links -->
+        <form action="#" method="get" class="sidebar-form">
+          <div class="input-group">
+            <input type="text" name="q2" id="q2" class="form-control" placeholder="通过城镇名查询经纬度">
+            <span class="input-group-btn">
+                <button type="button" name="search" id="search-ctn" class="btn btn-flat"><i class="fa fa-search" id="searchc"></i></button>
+              </span>
+          </div>
+        </form>
+        <li class="dis"><a href="#" ><i class="fa fa-link"></i> <span id="dis" >鼠标点击测距</span></a></li>
+        <li class="read"><a href="#"><i class="fa fa-link"></i> <span id="read">读取坐标点并显示</span></a></li>
+        <li class="treeview">
+          <a href="#"><i class="fa fa-link"></i> <span>绘制点线面</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a onclick="alert(overlays.length)">绘制个数</a></li>
+            <li ><a onclick="clearAll()">清除所有覆盖物</a></li>
+          </ul>
+        </li>
+        <li class="test"><a href="#"><i class="fa fa-link"></i> <span id="test">根据地名显示坐标</span></a></li>
+        <li class="hot"><a href="#"><i class="fa fa-link"></i> <span id="hot" onclick="openHeatmap();">读取并显示热力图</span></a></li>
+        <li class="treeview">
+          <a href="#"><i class="fa fa-link"></i> <span>出行路线规划</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <form action="#" method="get" class="sidebar-form" >
+              <input type="text" name="start" id="start" class="form-control" placeholder="请输入起点">
+              <input type="text" name="end" id="end" class="form-control" placeholder="请输入终点">
+            </form>
+            <li><a name="walk" id="walk">步行</a></li>
+            <li ><a name="bus" id="bus">公交</a></li>
+            <li ><a name="car" id="car">驾车</a></li>
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="#"><i class="fa fa-link"></i> <span>按条件查询周围地物</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <form action="#" method="get" class="sidebar-form" >
+              <input type="text" name="sm" id="sm" class="form-control" placeholder="请输入类型">
+              <input type="text" name="cit" id="cit" class="form-control" placeholder="请输入范围">
+            </form>
+            <li><a name="getd" id="getd">查询</a></li>
+          </ul>
+        </li>
+      </ul>
+    </section>
+    <!-- /.sidebar -->
+  </aside>
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper" style="background-color: #eff7ff">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+    </section>
+    <!-- Main content -->
+    <section class="content">
+      <!--百度地图容器-->
+      <div style="width:1220px;height:800px;border:#ccc solid 1px;top:-25px;left: -10px" id="dituContent"></div>
+      <h4 class="dd" style="font-weight: 600">   地点:</h4> <input type="text" name="pointInput2" id="pointInput2" class="pointInput2" style="display:inline-block;background:#888888;border:#d9edf7 solid 1px;color: #d9edf7;width:200px;height:30px;line-height:30px;font-size:14px;font-weight:700 "/>
+      <h4 class="zb" style="font-weight: 600">   坐标:</h4> <input type="text" name="pointInput3" id="pointInput3" class="pointInput3" style="display:inline-block;background:#888888;border:#d9edf7 solid 1px;color:#d9edf7;width:200px;height:30px;line-height:30px;font-size:14px;font-weight:700 "/>
+      <h4 class="sd" style="font-weight: 600">   查询具体地点:</h4> <input type="text" name="pointInput" id="pointInput" class="pointInput" style="display:inline-block;background:#888888;border:#d9edf7 solid 1px;color:#d9edf7;width:200px;height:30px;line-height:30px;font-size:14px;font-weight:700 "/>
+      <div class="sb">
+            <span class="input-group-btn">
+                <button type="button" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search" id="searchb"></i></button>
+              </span>
+      </div>
+      <div class="r-result" id="r-result"></div>
+    </section>
+    <!-- /.content -->
+  </div>
+</div>
+<!-- ./wrapper -->
+<!-- jQuery 2.2.3 -->
+<script src="plugins/jQuery/jquery-2.2.3.min.js"></script>
+<!-- Bootstrap 3.3.6 -->
+<script src="bootstrap/js/bootstrap.min.js"></script>
+<!-- AdminLTE App -->
+<script src="dist/js/app.min.js"></script>
+<!-- FastClick -->
+<script src="plugins/fastclick/fastclick.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="/dist/js/demo.js"></script>
+<script type="text/javascript">
+      //创建和初始化地图函数：
+      var map;
+      function initMap(){
+          createMap();//创建地图
+          setMapEvent();//设置地图事件
+          addMapControl();//向地图添加控件
+      }
+
+      //创建地图函数：
+      function createMap(){
+          map = new BMap.Map("dituContent");//在百度地图容器中创建一个地图
+          var point = new BMap.Point(120.913623,32.023447);//定义一个中心点坐标
+          map.centerAndZoom(point,17);//设定地图的中心点和坐标并将地图显示在地图容器中
+          window.map = map;//将map变量存储在全局
+      }
+
+      //地图事件设置函数：
+      function setMapEvent(){
+          map.enableDragging();//启用地图拖拽事件，默认启用(可不写)
+          map.enableScrollWheelZoom();//启用地图滚轮放大缩小
+          map.enableKeyboard();//启用键盘上下左右键移动地图
+          map.setMapStyle({style:'dark'});
+      }
+
+      //地图控件添加函数：
+      function addMapControl(){
+          //向地图中添加缩放控件
+          var ctrl_nav = new BMap.NavigationControl({anchor:BMAP_ANCHOR_TOP_LEFT,type:BMAP_NAVIGATION_CONTROL_LARGE});
+          map.addControl(ctrl_nav);
+          //向地图中添加缩略图控件
+          var ctrl_ove = new BMap.OverviewMapControl({anchor:BMAP_ANCHOR_BOTTOM_RIGHT,isOpen:1});
+          map.addControl(ctrl_ove);
+          //向地图中添加比例尺控件
+          var ctrl_sca = new BMap.ScaleControl({anchor:BMAP_ANCHOR_BOTTOM_LEFT});
+          map.addControl(ctrl_sca);
+      }
+
+      initMap();//创建和初始化地图
+  </script>
+<script type="text/javascript">
+    /**鼠标测距*/
+    var myDis = new BMapLib.DistanceTool(map);
+    dis.addEventListener("click",function(){
+        myDis.open();
+    });
+</script>
+<script type="text/javascript">
+    /**单击获取点击的经纬度和地名*/
+    var geoc = new BMap.Geocoder();   /**创建解析器*/
+    map.addEventListener("click",function(e){
+        document.getElementById("pointInput").value=e.point.lng + "," + e.point.lat;
+        var pt = e.point;
+        geoc.getLocation(pt, function(rs){
+            var addComp = rs.addressComponents;   /**创建逆解析器*/
+            document.getElementById("pointInput2").value=(addComp.province + ", " + addComp.city + ", " + addComp.district);
+        });
+    });
+</script>
+<script type="text/javascript">
+    /**右键单击放大缩小*/
+    var menu = new BMap.ContextMenu();
+    var txtMenuItem = [{text:'放大', callback:function(){map.zoomIn()}}, {text:'缩小', callback:function(){map.zoomOut()}}];
+    for(var i=0; i<txtMenuItem.length; i++){
+        menu.addItem(new BMap.MenuItem(txtMenuItem[i].text,txtMenuItem[i].callback,100));
+    }
+    map.addContextMenu(menu);
+</script>
+<script type="text/javascript">
+    /**搜索地点*/
+    var local = new BMap.LocalSearch(map, {
+        renderOptions:{map: map},
+        autoViewport:true
+    });
+    document.getElementById("search-btn").addEventListener("click",function () {
+        local.search(document.getElementById("pointInput3").value);
+    })
+
+  /**关键字周边搜索*/
+  getd.addEventListener("click",function () {
+      local.searchNearby(document.getElementById("sm").value, document.getElementById("cit").value);     /**searchNearby第一个参数：要搜索啥；第二个参数：范围（一般为地名）*/
+  })
+
+</script>
+<script type="text/javascript">
+  document.getElementById("search-ctn").addEventListener("click",function () {
+      searchByStationName() ;
+      map.clearOverlays();        /**清空原来的标注*/
+  })
+  function searchByStationName(){
+      var localSearch = new BMap.LocalSearch(map);
+      localSearch.enableAutoViewport(); /**允许自动调节窗体大小*/
+      var keyword = document.getElementById("q2").value;
+      localSearch.setSearchCompleteCallback(function (searchResult) {
+          var poi = searchResult.getPoi(0);
+          document.getElementById("pointInput").value = poi.point.lng + "," + poi.point.lat;
+          map.centerAndZoom(poi.point, 15);
+          var marker = new BMap.Marker(new BMap.Point(poi.point.lng, poi.point.lat));  /** 创建标注，为要查询的地方对应的经纬度*/
+          map.addOverlay(marker);
+      });
+      localSearch.search(keyword);
+  }
+</script>
+<script type="text/javascript">
+    /**读取json按city名查找位置*/
+    document.getElementById("test").addEventListener("click",function () {
+        searchByCityName();
+    })
+    function searchByCityName() {
+        var localSearch = new BMap.LocalSearch(map);                    /**创建一个搜索器*/
+        var keyword = $.getJSON("./json/tq.json",function(result){      /**读取JSON*/
+            $.each(result, function(){});
+            var jsont=keyword.responseText;                             /**得到范围结果json中key为responseText的value*/
+            var json=JSON.parse(jsont);                                 /**转成新json*/
+            for (var key in json) {
+                var sk=JSON.stringify(json[key].City);                  /**遍历新json*/
+                localSearch.setSearchCompleteCallback(                  /**对新json中每一个key为City的value调用一次百度api获取经纬度*/
+                    function (searchResult) {
+                        var poi = searchResult.getPoi(0);                /**获取第一个搜索到的经纬度*/
+                        var point = new BMap.Point();
+                        point.lng=poi.point.lng;                         /**新建百度支持的点，并对其经纬度赋值*/
+                        point.lat=poi.point.lat;
+                        var marker = new BMap.Marker(point);
+                        map.addOverlay(marker);                          /**每一个点创建一个标注，显示到地图上*/
+                    });
+                localSearch.search(sk);
+            }
+        })}                                                              /**由于要调用n次百度api，再逐一显示到地图上，所以共要发起2n次请求，效率较低
+                                                                                       （n为json中key的个数） */
+</script>
+<script type="text/javascript">
+    /**绘制点线面*/
+    map.enableScrollWheelZoom();                                         /**死代码，直接复制过来的*/
+    var overlays = [];
+    var overlaycomplete = function(e){
+        overlays.push(e.overlay);
+    };
+    var styleOptions = {
+        strokeColor:"red",    //边线颜色。
+        fillColor:"red",      //填充颜色。当参数为空时，圆形将没有填充效果。
+        strokeWeight: 3,       //边线的宽度，以像素为单位。
+        strokeOpacity: 0.8,	   //边线透明度，取值范围0 - 1。
+        fillOpacity: 0.6,      //填充的透明度，取值范围0 - 1。
+        strokeStyle: 'solid' //边线的样式，solid或dashed。
+    }
+    //实例化鼠标绘制工具
+    var drawingManager = new BMapLib.DrawingManager(map, {
+        isOpen: false, //是否开启绘制模式
+        enableDrawingTool: true, //是否显示工具栏
+        drawingToolOptions: {
+            anchor: BMAP_ANCHOR_TOP_RIGHT, //位置
+            offset: new BMap.Size(5, 5), //偏离值
+        },
+
+        circleOptions: styleOptions, //圆的样式
+        polylineOptions: styleOptions, //线的样式
+        polygonOptions: styleOptions, //多边形的样式
+        rectangleOptions: styleOptions //矩形的样式
+    });
+    //添加鼠标绘制工具监听事件，用于获取绘制结果
+    drawingManager.addEventListener('overlaycomplete', overlaycomplete);
+    function clearAll() {
+        for(var i = 0; i < overlays.length; i++){
+            map.removeOverlay(overlays[i]);
+        }
+        overlays.length = 0
+    }
+</script>
+<script type="text/javascript" >
+  /**读取json经纬度添加点*/
+  read.addEventListener("click",function () {
+      var js;
+      function addMarker(point){                                        /**单击添加的点，会显示信息窗口*/
+          var marker = new BMap.Marker(point);                          /**信息窗口内容：地名+经纬度*/
+          map.addOverlay(marker);
+          var opts = {
+              width :300,     // 信息窗口宽度
+              height: 80,     // 信息窗口高度
+              title : "城市：" , // 信息窗口标题
+              enableMessage:true,//设置允许信息窗发送短息
+          }
+          var infoWindow = new BMap.InfoWindow(js+"</br>"+"  经度："+point.lng+","+"纬度："+point.lat, opts);  // 创建信息窗口对象
+          marker.addEventListener("click", function(){
+              map.openInfoWindow(infoWindow,point); //开启信息窗口
+          });
+      }
+      var a=$.getJSON("./json/js.json",function(result){                /**获取json，同上*/
+          $.each(result, function(){});                                 /** 由于不用每次获取一个值就调用一次百度api，效率较高*/
+          var jsont=a.responseText;
+          var json=JSON.parse(jsont);
+          for (var key in json) {
+              var point = new BMap.Point();
+              point.lng=JSON.stringify(json[key].jd);
+              point.lat=JSON.stringify(json[key].wd);
+              js = JSON.stringify(json[key].city);
+              addMarker(point);
+          }
+      });
+  })
+</script>
+<script type="text/javascript">
+  /**显示热力图*/
+    var poi=[];                                                          /**创建对象数组，存放类型为po的对象*/
+    var a=$.getJSON("./json/js.json",function(result){
+        $.each(result, function(){});
+        var jsont=a.responseText;
+        var json=JSON.parse(jsont);
+        for (var key in json) {
+            var po={"lng":0,"lat":0,"count":0};
+            po.lng=json[key].jd;                                        /**遍历json，读取key的value的对象的key为jd的value赋给po的lng*/
+            po.lat=json[key].wd;
+            po.count=50;                                                /**由于我不会爬数据，所以权重统一设置为50，相当于这个热力图表示的是江苏省城镇密集度*/
+            poi.push(po);                                               /**每一个po都添加到poi数组里*/
+        }
+    })
+      if(!isSupportCanvas()){
+          alert('热力图目前只支持有canvas支持的浏览器,您所使用的浏览器不能使用热力图功能~')
+      }
+      //详细的参数,可以查看heatmap.js的文档 https://github.com/pa7/heatmap.js/blob/master/README.md
+      //参数说明如下:
+      /* visible 热力图是否显示,默认为true
+       * opacity 热力的透明度,1-100
+       * radius 势力图的每个点的半径大小
+       * gradient  {JSON} 热力图的渐变区间 . gradient如下所示
+       *	{
+              .2:'rgb(0, 255, 255)',
+              .5:'rgb(0, 110, 255)',
+              .8:'rgb(100, 0, 255)'
+          }
+          其中 key 表示插值的位置, 0~1.
+              value 为颜色值.
+       */
+      //是否显示热力图
+      function openHeatmap(){
+          heatmapOverlay = new BMapLib.HeatmapOverlay({"radius":50},{"opacity":50});          /**在这里怎么设置gradient都改不了颜色*/
+          map.addOverlay(heatmapOverlay);
+          heatmapOverlay.setDataSet({data:poi,max:100});
+          heatmapOverlay.show();
+      }
+                                                                                              /**不关*/
+//      function closeHeatmap(){
+//          heatmapOverlay.hide();
+//      }
+//      closeHeatmap();
+      //判断浏览区是否支持canvas
+      function isSupportCanvas(){
+          var elem = document.createElement('canvas');
+          return !!(elem.getContext && elem.getContext('2d'));
+      }
+
+</script>
+<script type="text/javascript">
+    /**步行规划*/
+  walk.addEventListener("click",function () {                                            /**创建单击事件*/
+      var walking = new BMap.WalkingRoute(map, {
+          renderOptions: {
+              map: map,
+              panel: "r-result",                                                         /**路线结果显示到名字叫r-result的div中*/
+              autoViewport: true
+          }
+      });
+      var start=new BMap.Point();
+      var end=new BMap.Point();
+      var myGeo = new BMap.Geocoder();
+      myGeo.getPoint(document.getElementById("start").value, function(point){              /**读取地名获取经纬度赋给start，end*/
+              start.lat=point.lat;
+              start.lng=point.lng;
+          map.addOverlay(new BMap.Marker(start));
+      },"南通市");
+      var myGeo2 = new BMap.Geocoder();
+      myGeo2.getPoint(document.getElementById("end").value, function(point){
+          end.lat=point.lat;
+          end.lng=point.lng;
+          map.addOverlay(new BMap.Marker(end));
+      },"南通市");
+      walking.search(start, end);
+  })
+  /**公交规划*/
+    bus.addEventListener("click",function () {
+        var tr = new BMap.TransitRoute(map, {
+            renderOptions: {
+                map: map,
+                panel: "r-result",
+                autoViewport: true
+
+            }
+        });
+        var start=new BMap.Point();
+        var end=new BMap.Point();
+        // 创建地址解析器实例
+        var myGeo = new BMap.Geocoder();
+        myGeo.getPoint(document.getElementById("start").value, function(point){
+            start.lat=point.lat;
+            start.lng=point.lng;
+            map.addOverlay(new BMap.Marker(start));
+        },"南通市");
+        var myGeo2 = new BMap.Geocoder();
+        myGeo2.getPoint(document.getElementById("end").value, function(point){
+            end.lat=point.lat;
+            end.lng=point.lng;
+            map.addOverlay(new BMap.Marker(end));
+        },"南通市");
+        tr.search(start, end);
+    })
+  /**驾车规划*/
+    car.addEventListener("click",function () {
+        var driving = new BMap.DrivingRoute(map, {renderOptions: {map: map,
+            autoViewport: true                                                   /**用的百度3.0的api搜索的路线，3.0对显示规划结果支持不好，所以没弄成*/
+          }
+        });
+
+        var start=new BMap.Point();
+        var end=new BMap.Point();
+        // 创建地址解析器实例
+        var myGeo = new BMap.Geocoder();
+        // 将地址解析结果显示在地图上,并调整地图视野
+        myGeo.getPoint(document.getElementById("start").value, function(point){
+            start.lat=point.lat;
+            start.lng=point.lng;
+            map.addOverlay(new BMap.Marker(start));
+        },"南通市");
+        var myGeo2 = new BMap.Geocoder();
+        myGeo2.getPoint(document.getElementById("end").value, function(point){
+            end.lat=point.lat;
+            end.lng=point.lng;
+            map.addOverlay(new BMap.Marker(end));
+        },"南通市");
+        driving.search(start, end);
+    })
+</script>
+<script type="text/javascript">
+      /**地名自动提示*/
+    function G(id) {
+        return document.getElementById(id);
+    }
+    var ac = new BMap.Autocomplete(    //建立一个自动完成的对象
+        {"input" :"pointInput3",                                      /**这里定位不到二级地址（比如说侧边栏）里的text内容，所以只弄了一个支持自动提示功能的文本框*/
+            "location" : map
+        });
+    ac.addEventListener("onhighlight", function(e) {  //鼠标放在下拉列表上的事件
+        var str = "";
+        var _value = e.fromitem.value;
+        var value = "";
+        if (e.fromitem.index > -1) {
+            value = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+        }
+        str = "FromItem<br />index = " + e.fromitem.index + "<br />value = " + value;
+
+        value = "";
+        if (e.toitem.index > -1) {
+            _value = e.toitem.value;
+            value = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+        }
+        str += "<br />ToItem<br />index = " + e.toitem.index + "<br />value = " + value;
+        G("searchResultPanel").innerHTML = str;
+    });
+
+    var myValue;
+    ac.addEventListener("onconfirm", function(e) {    //鼠标点击下拉列表后的事件
+        var _value = e.item.value;
+        myValue = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+        G("searchResultPanel").innerHTML ="onconfirm<br />index = " + e.item.index + "<br />myValue = " + myValue;
+
+        setPlace();
+    });
+
+    function setPlace(){
+        map.clearOverlays();    //清除地图上所有覆盖物
+        function myFun(){
+            var pp = local.getResults().getPoi(0).point;    //获取第一个智能搜索的结果
+            map.centerAndZoom(pp, 18);
+            map.addOverlay(new BMap.Marker(pp));    //添加标注
+        }
+        var local = new BMap.LocalSearch(map, { //智能搜索
+            onSearchComplete: myFun
+        });
+        local.search(myValue);
+    }
+</script>
+</body>
+
+</html>

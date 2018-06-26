@@ -1,0 +1,175 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <script src="plugins/jQuery/jquery-2.2.3.min.js"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?key=&v=1.1&services=true"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.2"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=6mkjChy6GDiOv1xhzmjEK1qx4wLuDTN8"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=3.0&ak=6mkjChy6GDiOv1xhzmjEK1qx4wLuDTN8"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/library/DistanceTool/1.2/src/DistanceTool_min.js"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/library/DrawingManager/1.4/src/DrawingManager_min.js"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/library/Heatmap/2.0/src/Heatmap_min.js"></script>
+    <link rel="stylesheet" href="http://api.map.baidu.com/library/DrawingManager/1.4/src/DrawingManager_min.css" />
+    <script type="text/javascript" src="http://api.map.baidu.com/library/SearchInfoWindow/1.4/src/SearchInfoWindow_min.js"></script>
+
+    <style type="text/css">
+        ul,li{list-style: none;margin:0;padding:0;float:left;}
+        html{height:100%}
+        body{height:100%;margin:0px;padding:0px;font-family:"微软雅黑";}
+        #container{height:500px;width:100%;}
+        #r-result{width:100%;}
+    </style>
+</head>
+<body>
+<div id="container"></div>
+<div id="r-result">
+
+    <input type="button" id="getjson" value="获取json">
+</div>
+</body>
+</html>
+<script>
+/**就这一段是的*/
+    var po={"id":0,"lng":0,"lat":0}
+    $(document).ready(function(){
+        getjson.addEventListener("click",function () {
+            var localSearch = new BMap.LocalSearch(map);
+            var a=$.getJSON("./json/w.json",function(result){
+                $.each(result, function(){});
+                var jsont=a.responseText;
+                var json=JSON.parse(jsont);
+                for (var key in json) {
+                    var sk=JSON.stringify(json[key].name);
+                    document.write(sk);
+                    localSearch.setSearchCompleteCallback(
+                        function (searchResult) {
+                            var poi = searchResult.getPoi(0);
+                            po.lng=poi.point.lng;
+                            po.lat=poi.point.lat;
+                            po.id=po.id+1;
+//                            points2.push(po);
+                            document.write(JSON.stringify(po)+",")
+                        });
+//                    document.write(JSON.stringify(poi));
+                    localSearch.search(sk);
+                }
+//                document.write(points);
+            });
+
+        });
+    })
+/**到这停*/
+</script>
+<script>
+
+    function getpoi() {
+
+        var poi2=[];
+        var a=$.getJSON("./json/js.json",function(result){
+            $.each(result, function(){});
+            var jsont=a.responseText;
+            var json=JSON.parse(jsont);
+            for (var key in json) {
+                var po={"lng":null,"lat":null,"count":null};
+                po.lng=json[key].jd;
+                po.lat=json[key].wd;
+                po.count=50;
+                poi2.push(po);
+
+            }
+            document.write(JSON.stringify(poi2));
+
+        })
+
+    }
+
+    //                return poi;
+    //           document.write(JSON.stringify(poi));
+    //                document.write(JSON.stringify(points)==JSON.stringify(poi));
+    //
+    //
+    //        var a=getpoi();
+    //        document.write(a);
+
+
+
+</script>
+<script type="text/javascript">
+    var map = new BMap.Map("container");          // 创建地图实例
+    var point = new BMap.Point(120.905565,32.016184);
+    map.centerAndZoom(point, 14);             // 初始化地图，设置中心点坐标和地图级别
+    map.enableScrollWheelZoom(); // 允许滚轮缩放
+    po.addEventListener("click",function () {
+        document.write(poi);
+    })
+
+    var poi=[];
+    var a=$.getJSON("./json/js.json",function(result){
+        $.each(result, function(){});
+        var jsont=a.responseText;
+        var json=JSON.parse(jsont);
+        for (var key in json) {
+            var po={"lng":0,"lat":0,"count":0};
+            po.lng=parseFloat(JSON.stringify(json[key].jd));
+            po.lat=parseFloat(JSON.stringify(json[key].wd));
+            po.count=50;
+            poi.push(po);
+        }
+    })
+
+
+    //    var points=[{"lng":118.78,"lat":32.04,"count":50},{"lng":118.83,"lat":31.95,"count":50},{"lng":118.83,"lat":32.36,"count":50},{"lng":118.62,"lat":32.07,"count":50},{"lng":117.2,"lat":34.26,"count":50},{"lng":119.16,"lat":34.59,"count":50},{"lng":120.86,"lat":32.01,"count":50},{"lng":120.62,"lat":31.32,"count":50},{"lng":120.29,"lat":31.59,"count":50},{"lng":119.95,"lat":31.79,"count":50},{"lng":116.57,"lat":34.79,"count":50},{"lng":116.93,"lat":34.73,"count":50},{"lng":119.11,"lat":34.83,"count":50},{"lng":118.75,"lat":34.54,"count":50},{"lng":118.33,"lat":34.38,"count":50},{"lng":117.97,"lat":34.3,"count":50},{"lng":117.94,"lat":33.89,"count":50},{"lng":117.2,"lat":34.26,"count":50},{"lng":119.02,"lat":33.59,"count":50},{"lng":119.23,"lat":34.3,"count":50},{"lng":119.36,"lat":34.09,"count":50},{"lng":118.79,"lat":34.12,"count":50},{"lng":118.3,"lat":33.96,"count":50},{"lng":118.68,"lat":33.73,"count":50},{"lng":118.05,"lat":33,"count":50},{"lng":119.26,"lat":33.77,"count":50},{"lng":119.02,"lat":33.62,"count":50},{"lng":119.15,"lat":33.5,"count":50},{"lng":118.85,"lat":33.28,"count":50},{"lng":118.23,"lat":33.46,"count":50},{"lng":119.02,"lat":33.01,"count":50},{"lng":120.13,"lat":33.38,"count":50},{"lng":119.84,"lat":34.01,"count":50},{"lng":119.79,"lat":33.78,"count":50},{"lng":120.26,"lat":33.77,"count":50},{"lng":119.77,"lat":33.46,"count":50},{"lng":119.56,"lat":34.2,"count":50},{"lng":120.45,"lat":33.19,"count":50},{"lng":120.31,"lat":32.84,"count":50},{"lng":120.45,"lat":32.57,"count":50},{"lng":120.56,"lat":32.39,"count":50},{"lng":121.18,"lat":32.33,"count":50},{"lng":121.66,"lat":31.8,"count":50},{"lng":121.15,"lat":31.89,"count":50},{"lng":121.05,"lat":32.08,"count":50},{"lng":119.42,"lat":32.39,"count":50},{"lng":119.32,"lat":33.23,"count":50},{"lng":119.82,"lat":32.93,"count":50},{"lng":119.45,"lat":32.78,"count":50},{"lng":120.02,"lat":32.16,"count":50},{"lng":120.15,"lat":32.51,"count":50},{"lng":119.9,"lat":32.49,"count":50},{"lng":120.26,"lat":32.03,"count":50},{"lng":119.55,"lat":32.43,"count":50},{"lng":119.42,"lat":32.39,"count":50},{"lng":119.16,"lat":32.27,"count":50},{"lng":119.44,"lat":32.2,"count":50},{"lng":119.44,"lat":32.2,"count":50},{"lng":119.81,"lat":32.24,"count":50},{"lng":119.55,"lat":32,"count":50},{"lng":119.95,"lat":31.78,"count":50},{"lng":119.82,"lat":31.36,"count":50},{"lng":119.56,"lat":31.74,"count":50},{"lng":119.48,"lat":31.43,"count":50},{"lng":119.16,"lat":31.95,"count":50},{"lng":119.02,"lat":31.65,"count":50},{"lng":118.87,"lat":31.32,"count":50},{"lng":120.26,"lat":31.91,"count":50},{"lng":120.55,"lat":31.86,"count":50},{"lng":120.74,"lat":31.64,"count":50},{"lng":121.1,"lat":31.45,"count":50},{"lng":120.95,"lat":31.39,"count":50},{"lng":120.62,"lat":31.32,"count":50},{"lng":120.63,"lat":31.16,"count":50}];
+
+    if(!isSupportCanvas()){
+        alert('热力图目前只支持有canvas支持的浏览器,您所使用的浏览器不能使用热力图功能~')
+    }
+    //详细的参数,可以查看heatmap.js的文档 https://github.com/pa7/heatmap.js/blob/master/README.md
+    //参数说明如下:
+    /* visible 热力图是否显示,默认为true
+     * opacity 热力的透明度,1-100
+     * radius 势力图的每个点的半径大小
+     * gradient  {JSON} 热力图的渐变区间 . gradient如下所示
+     *	{
+            .2:'rgb(0, 255, 255)',
+            .5:'rgb(0, 110, 255)',
+            .8:'rgb(100, 0, 255)'
+        }
+        其中 key 表示插值的位置, 0~1.
+            value 为颜色值.
+     */
+
+    //是否显示热力图
+    function openHeatmap(){
+        heatmapOverlay = new BMapLib.HeatmapOverlay({"radius":50},gradient = {
+            0:'rgb(0, 0, 12)',
+            .5:'rgb(0,0,125)',
+            1:'rgb(0,0,255)'
+        });
+        map.addOverlay(heatmapOverlay);
+        heatmapOverlay.setDataSet({data:poi,max:100});
+        heatmapOverlay.show();
+    }
+
+    function setGradient(){
+        /*格式如下所示:
+       {
+             0:'rgb(102, 255, 0)',
+             .5:'rgb(255, 170, 0)',
+             1:'rgb(255, 0, 0)'
+       }*/
+        var gradient = {
+            0:'rgb(0, 0, 12)',
+            .5:'rgb(0,0,125)',
+            1:'rgb(0,0,255)'
+        };
+        heatmapOverlay.setOptions({"gradient":gradient});
+    }
+    //判断浏览区是否支持canvas
+    function isSupportCanvas(){
+        var elem = document.createElement('canvas');
+        return !!(elem.getContext && elem.getContext('2d'));
+    }
+</script>

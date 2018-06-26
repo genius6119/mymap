@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="plugins/jQuery/jquery-2.2.3.min.js"></script>
+
+</head>
+<body>
+<button>获取JSON</button>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("button").click(function(){
+            var a=$.getJSON("./json/qgcs.json",function(result){
+                $.each(result, function(){});
+                var jsont=a.responseText;
+                var json=JSON.parse(jsont);
+                for (var key in json) {
+                    if(key==33){
+                        var jso=json[key].children;
+                        for(var ke in jso){
+                            document.write(ke+JSON.stringify(jso[ke].name)+"</br>");
+                        }
+                    }
+                }
+            });
+        });
+    });
+</script>
+
+
+</body>
+</html>
